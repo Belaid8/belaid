@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modal Example</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-10">
+
+  <!-- 🟦 Card with Button -->
+  <div class="max-w-sm mx-auto bg-white border border-gray-300 rounded-lg shadow-lg p-4">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" class="mx-auto h-20" alt="Apple"/>
+    <h2 class="text-xl font-bold text-center mt-3">Apple</h2>
+    <p class="text-center text-gray-500">Click to view replacement parts</p>
+    <button onclick="openModal('apple')" class="w-full mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+      🔧 Show Parts
+    </button>
+  </div>
+
+  <!-- 🟨 Modal -->
+  <div id="modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg w-full max-w-md p-6 relative">
+      <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-500 hover:text-black text-2xl">&times;</button>
+      <h3 id="modalTitle" class="text-xl font-bold mb-4">Parts</h3>
+      <ul id="modalList" class="list-disc list-inside text-gray-700 space-y-2"></ul>
+    </div>
+  </div>
+
+  <!-- 🧠 JavaScript -->
+  <script>
+    const partsData = {
+      apple: ["Battery", "Screen", "Charging Port", "Camera"],
+      samsung: ["Display", "Back Cover", "Motherboard"],
+      realme: ["Speaker", "USB Connector", "Power Button"]
+    };
+
+    function openModal(brand) {
+      const modal = document.getElementById("modal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalList = document.getElementById("modalList");
+
+      modalTitle.textContent = brand.charAt(0).toUpperCase() + brand.slice(1) + " Replacement Parts";
+      modalList.innerHTML = "";
+
+      (partsData[brand] || ["No parts available"]).forEach(part => {
+        const li = document.createElement("li");
+        li.textContent = part;
+        modalList.appendChild(li);
+      });
+
+      modal.classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("modal").classList.add("hidden");
+    }
+  </script>
+
+</body>
+</html>
